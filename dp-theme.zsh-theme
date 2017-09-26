@@ -3,11 +3,12 @@
 
 # List colors using `spectrum_ls`
 
-local git_color="$FG[243]"
-local venv_color="$FG[248]"
-local user_color="$FG[238]"
-local error_color="$FG[124]"
-local timer_color="$FG[242]"
+local git_color="243"
+local dirty_color="248"
+local venv_color="248"
+local user_color="238"
+local error_color="124"
+local timer_color="242"
 
 # git_prompt_status
 ZSH_THEME_GIT_PROMPT_ADDED=""
@@ -23,25 +24,22 @@ ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=""
 ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE=""
 ZSH_THEME_GIT_PROMPT_DIVERGED_REMOTE=""
 
-ZSH_THEME_GIT_PROMPT_PREFIX=" %{$git_color%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$FG[248]%}*%{$git_color%}"
+ZSH_THEME_GIT_PROMPT_PREFIX=" %F{$git_color}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%f"
+ZSH_THEME_GIT_PROMPT_DIRTY="%F{$dirty_color}*%F{$git_color%}"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 
-ZSH_THEME_VIRTUALENV_PREFIX=" %{$venv_color%}"
-ZSH_THEME_VIRTUALENV_SUFFIX="%{$reset_color%}"
+ZSH_THEME_VIRTUALENV_PREFIX=" %F{$venv_color}"
+ZSH_THEME_VIRTUALENV_SUFFIX="%f"
 
-test $UID -eq 0 && user_color="$FG[124]"
-# See spectrum_ls for colors
+test $UID -eq 0 && user_color="124"
 
-PROMPT='%{$user_color%}%~%{$reset_color%}'\
+PROMPT="%F{$user_color}%~%f"\
 '$(direnv_python_prompt_info)'\
 '$(git_prompt_info)'\
-'%(?.%{$user_color%}.%{$error_color%})%(!.#.❯)%{$reset_color%} '
+"%(?.%F{$user_color}.%F{$error_color})%(!.#.❯)%f "
 
-PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
-
-#RPROMPT='%(?..%{$fg_bold[red]%}exit %?%{$reset_color%})'
+PROMPT2='%F{red}\ %f'
 
 function prompt_human_time() {
   elapsed_seconds=$1
@@ -68,7 +66,7 @@ function precmd() {
     local elapsed_seconds=$(($SECONDS - $prompt_cmd_timestamp))
     if [ "$elapsed_seconds" -ge "${prompt_visible_exec_time:=5}" ]; then
       time_string=$(prompt_human_time $elapsed_seconds)
-      export RPROMPT="%{$timer_color%}${time_string}%{$reset_color%}"
+      export RPROMPT="%F{$242%}${time_string}%f"
     fi
     unset prompt_cmd_timestamp
   fi
