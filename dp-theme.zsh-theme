@@ -1,8 +1,3 @@
-# Git-centric variation of the "fishy" theme.
-# See screenshot at http://ompldr.org/vOHcwZg
-
-# List colors using `spectrum_ls`
-
 local git_color="243"
 local dirty_color="248"
 local venv_color="248"
