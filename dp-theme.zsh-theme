@@ -3,7 +3,6 @@ local dirty_color="248"
 local venv_color="248"
 local user_color="238"
 local error_color="124"
-local timer_color="242"
 
 # git_prompt_status
 ZSH_THEME_GIT_PROMPT_ADDED=""
@@ -56,12 +55,13 @@ function preexec() {
 }
 
 function precmd() {
+  local timer_color="242"
   unset RPROMPT
   if [ $prompt_cmd_timestamp ]; then
     local elapsed_seconds=$(($SECONDS - $prompt_cmd_timestamp))
     if [ "$elapsed_seconds" -ge "${prompt_visible_exec_time:=5}" ]; then
       time_string=$(prompt_human_time $elapsed_seconds)
-      export RPROMPT="%F{$242%}${time_string}%f"
+      export RPROMPT="%F{$timer_color%}${time_string}%f"
     fi
     unset prompt_cmd_timestamp
   fi
