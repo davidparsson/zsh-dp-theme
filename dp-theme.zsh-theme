@@ -1,3 +1,5 @@
+autoload -Uz add-zsh-hook
+
 local git_color="243"
 local dirty_color="248"
 local venv_color="248"
@@ -50,11 +52,11 @@ function prompt_human_time() {
   echo "${time_string}"
 }
 
-function preexec() {
+function dp_theme_preexec() {
   prompt_cmd_timestamp=${prompt_cmd_timestamp:-$SECONDS}
 }
 
-function precmd() {
+function dp_theme_precmd() {
   local timer_color="242"
   unset RPROMPT
   if [ $prompt_cmd_timestamp ]; then
@@ -66,3 +68,6 @@ function precmd() {
     unset prompt_cmd_timestamp
   fi
 }
+
+add-zsh-hook preexec dp_theme_preexec
+add-zsh-hook precmd dp_theme_precmd
