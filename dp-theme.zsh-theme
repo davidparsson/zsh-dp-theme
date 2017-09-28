@@ -1,4 +1,5 @@
 autoload -Uz add-zsh-hook
+setopt PROMPT_SUBST
 
 local git_color="243"
 local dirty_color="248"
