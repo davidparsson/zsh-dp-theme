@@ -3,7 +3,7 @@ setopt PROMPT_SUBST
 
 local git_color="243"
 local dirty_color="248"
-local venv_color="248"
+local pyenv_version_color="248"
 local user_color="238"
 local error_color="124"
 
@@ -26,17 +26,21 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%f"
 ZSH_THEME_GIT_PROMPT_DIRTY="%F{$dirty_color}*%F{$git_color%}"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 
-ZSH_THEME_VIRTUALENV_PREFIX=" %F{$venv_color}"
-ZSH_THEME_VIRTUALENV_SUFFIX="%f"
+ZSH_THEME_PYENV_VERSION_PREFIX=" %F{$pyenv_version_color}"
+ZSH_THEME_PYENV_VERSION_SUFFIX="%f"
 
 test $UID -eq 0 && user_color="124"
 
 PROMPT="%F{$user_color}%~%f"\
-'$(direnv_python_prompt_info)'\
+'$(pyenv_version_prompt_info)'\
 '$(git_prompt_info)'\
 "%(?.%F{$user_color}.%F{$error_color})%(!.#.❯)%f "
 
 PROMPT2='%F{red}\ %f'
+
+function pyenv_version_prompt_info() {
+  [ ! -z $PYENV_VERSION ] && echo "${ZSH_THEME_PYENV_VERSION_PREFIX}${PYENV_VERSION}${ZSH_THEME_PYENV_VERSION_SUFFIX}"
+}
 
 function prompt_human_time() {
   elapsed_seconds=$1
